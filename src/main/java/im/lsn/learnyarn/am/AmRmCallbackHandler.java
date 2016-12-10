@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by xingsen on 2016/10/10.
  */
-public class ApplicationMasterCallback implements AMRMClientAsync.CallbackHandler {
+public class AmRmCallbackHandler implements AMRMClientAsync.CallbackHandler {
 	
 	@Override
 	public void onContainersCompleted(List<ContainerStatus> statuses) {
