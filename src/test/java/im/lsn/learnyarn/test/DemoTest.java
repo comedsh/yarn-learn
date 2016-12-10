@@ -92,6 +92,7 @@ public class DemoTest {
 			try {
 				
 				Thread.sleep(1000);
+				
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -99,10 +100,6 @@ public class DemoTest {
 		}
 		
 		System.out.println( report.getFinalApplicationStatus() );
-		
-		while (true) {
-			
-			Thread.sleep(1000);
-		}
+
 	}
 }
