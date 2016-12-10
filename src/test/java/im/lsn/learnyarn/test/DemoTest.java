@@ -64,6 +64,7 @@ public class DemoTest {
 		
 		boolean outTrackingUrl = false;
 		
+		// 下面的代码的用途是监控 application master 的执行状态。
 		ApplicationReport report = client.getApplicationReport( applicationId );
 		
 		while (report.getYarnApplicationState() != YarnApplicationState.FINISHED) {
