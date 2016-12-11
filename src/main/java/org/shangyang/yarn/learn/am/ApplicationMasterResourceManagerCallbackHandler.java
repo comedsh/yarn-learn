@@ -131,8 +131,9 @@ public class ApplicationMasterResourceManagerCallbackHandler implements AMRMClie
 			ContainerLaunchContext launchContext = Records.newRecord( ContainerLaunchContext.class );
 
 			StringBuilder cmd = new StringBuilder();
-
-			cmd.append("ping -c3 www.baidu.com").append(" ").append("1>")
+			
+			// -cN: N 表示要 ping 多少次
+			cmd.append("ping -c100 www.baidu.com").append(" ").append("1>")
 			   .append(ApplicationConstants.LOG_DIR_EXPANSION_VAR).append(Path.SEPARATOR)
 			   .append(ApplicationConstants.STDOUT).append(" ").append("2>")
 			   .append(ApplicationConstants.LOG_DIR_EXPANSION_VAR).append(Path.SEPARATOR)
@@ -142,7 +143,6 @@ public class ApplicationMasterResourceManagerCallbackHandler implements AMRMClie
 			
 			setupLaunchContextTokens( launchContext );
 			
-			// 我的疑问是，如果申请的资源 ( Container ) 比较多，不会是一个 node manager 能够管理的，所以，这里的 nodeManager 应该是管理的多个 containers
 			nodeManager.startContainerAsync( c, launchContext );
 
 		}

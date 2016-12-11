@@ -87,8 +87,7 @@ public class ApplicationMaster {
 																 							Priority.newInstance(0) );
 			
 			// AM 向 RM 正式提交请求，当请求成功，会回调 ApplicationClientCallbackHandler
-			resourceManager.addContainerRequest( containerRequest );
-			
+			resourceManager.addContainerRequest( containerRequest );			
 		}
 		
 	}

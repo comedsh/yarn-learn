@@ -15,7 +15,11 @@ import org.junit.Test;
 import org.shangyang.yarn.learn.client.ApplicationClient;
 
 /**
- * Created by xingsen on 2016/10/7.
+ * 
+ * @author 商洋
+ *
+ * @createTime：Dec 11, 2016 2:42:36 PM
+ * 
  */
 public class ApplicationClientTest {
 	
@@ -45,6 +49,7 @@ public class ApplicationClientTest {
 		
 		// 默认，yarn 允许为 container 分配的最小的分配内存为 1024；若要使用的内存比这个少，这里必须进行设置
 		conf.setInt(YarnConfiguration.RM_SCHEDULER_MINIMUM_ALLOCATION_MB, 128);
+		conf.setInt(YarnConfiguration.NM_PMEM_MB, 4 * 1024);
 		
 		// 启动 Yarn Clusters
 		@SuppressWarnings("resource")
