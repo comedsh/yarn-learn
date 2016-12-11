@@ -5,4 +5,4 @@ target/
 *.iml
 .idea/
 out/
-/.DS_Store
+.DS_Store

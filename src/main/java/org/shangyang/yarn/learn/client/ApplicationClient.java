@@ -1,6 +1,5 @@
-package im.lsn.learnyarn;
+package org.shangyang.yarn.learn.client;
 
-import im.lsn.learnyarn.am.ApplicationMaster;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configuration;
@@ -21,6 +20,7 @@ import org.apache.hadoop.yarn.conf.YarnConfiguration;
 import org.apache.hadoop.yarn.exceptions.YarnException;
 import org.apache.hadoop.yarn.util.ConverterUtils;
 import org.apache.hadoop.yarn.util.Records;
+import org.shangyang.yarn.learn.am.ApplicationMaster;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,9 +29,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DemoApplicationClient {
+public class ApplicationClient {
 
-	private static Log LOGGER = LogFactory.getLog(DemoApplicationClient.class);
+	private static Log LOGGER = LogFactory.getLog( ApplicationClient.class );
 
 	private final Configuration conf;
 
@@ -46,7 +46,7 @@ public class DemoApplicationClient {
 	 * 
 	 * @param conf
 	 */
-	public DemoApplicationClient( Configuration conf ) {
+	public ApplicationClient( Configuration conf ) {
 
 		this.conf = conf;
 
@@ -101,10 +101,11 @@ public class DemoApplicationClient {
 
 		// 定义 Container 所需的资源 -> am: Application Master
 		Resource amResource = Records.newRecord( Resource.class );
+		
+		// 单机，资源有限，合理配置
+		amResource.setMemorySize( Math.min( clusterMax.getMemorySize(), 256 ) );
 
-		amResource.setMemorySize( Math.min( clusterMax.getMemorySize(), 1024 ) );
-
-		amResource.setVirtualCores( Math.min(clusterMax.getVirtualCores(), 4 ) );
+		amResource.setVirtualCores( Math.min(clusterMax.getVirtualCores(), 1 ) );
 
 		appContext.setResource( amResource );
 
@@ -120,7 +121,12 @@ public class DemoApplicationClient {
 			
 			cmd.append(" ").append("debug").append(" ");
 		}
-		
+
+		/*
+		 * 1> 指标准信息输出路径（也就是默认的输出方式）
+		 * 2> 指错误信息输出路径
+		 * 2>&1 指将标准信息输出路径指定为错误信息输出路径（也就是都输出在一起）
+		 */
 		cmd.append("1>" + ApplicationConstants.LOG_DIR_EXPANSION_VAR + Path.SEPARATOR + ApplicationConstants.STDOUT).append(" ")
 		   .append("2>" + ApplicationConstants.LOG_DIR_EXPANSION_VAR + Path.SEPARATOR + ApplicationConstants.STDERR );
 		
@@ -246,7 +252,7 @@ public class DemoApplicationClient {
 		
 		Configuration conf = new YarnConfiguration();
 		
-		DemoApplicationClient client = new DemoApplicationClient(conf);
+		ApplicationClient client = new ApplicationClient(conf);
 		
 		ApplicationId applicationId = client.submit();
 		
