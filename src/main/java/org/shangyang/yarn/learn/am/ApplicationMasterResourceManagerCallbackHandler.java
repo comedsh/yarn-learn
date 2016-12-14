@@ -69,7 +69,7 @@ public class ApplicationMasterResourceManagerCallbackHandler implements AMRMClie
 
 	/**
 	 * 
-	 * 注意，不是当 Container 的相关任务完成，会回调此方法；而是逐步的进行回调...., 看下面 Application Master 的输出日志，
+	 * 注意，不是当所有的 Container 任务完成后才会回调此方法；而是逐步的进行回调的，也就是某些 Container 执行完毕以后，就会直接回调...., 看下面 Application Master 的输出日志，
 	 * 
 	 * 16/12/11 13:56:46 INFO am.ApplicationMasterResourceManagerCallbackHandler: onContainersCompleted() called, totally get 1 replied ~~~~
 	 * 

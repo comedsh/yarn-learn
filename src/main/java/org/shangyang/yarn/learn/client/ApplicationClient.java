@@ -29,6 +29,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 
+ * @author 商洋
+ *
+ * @createTime：Dec 14, 2016 1:51:28 PM
+ */
 public class ApplicationClient {
 
 	private static Log LOGGER = LogFactory.getLog( ApplicationClient.class );
@@ -117,6 +123,7 @@ public class ApplicationClient {
 
 		cmd.append( "\"" + ApplicationConstants.Environment.JAVA_HOME.$() + "/bin/java\"").append(" ").append( appMasterMainClass ).append(" ");
 		
+		// 如果不是使用 MINI YARN CLUSTER，那么需要设置一个参数 debug，需要重新构造 Configuration
 		if (conf.getBoolean(YarnConfiguration.IS_MINI_YARN_CLUSTER, false)) {
 			
 			cmd.append(" ").append("debug").append(" ");

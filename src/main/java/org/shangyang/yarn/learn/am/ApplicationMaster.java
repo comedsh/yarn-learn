@@ -24,14 +24,13 @@ public class ApplicationMaster {
 		Configuration conf = new YarnConfiguration();
 
 		// 便于使用 minicluster 调试
-		@SuppressWarnings("unused")
 		boolean isDebug = false;
 		
 		if (args.length >= 1 && args[0].equalsIgnoreCase("debug")) {
 			isDebug = true;
 		}
 		
-//		if ( isDebug ) {
+		if ( isDebug ) {
 
 			conf.set(YarnConfiguration.RM_ADDRESS, "localhost:8032");
 			
@@ -47,9 +46,20 @@ public class ApplicationMaster {
 			
 			conf.setInt(YarnConfiguration.RM_SCHEDULER_MINIMUM_ALLOCATION_MB, 128);
 			
-//		}
+		}
 		
-		// 构造函数会初始化 node manager
+		/**
+		 * 备注：如果不需要 Application Master 再通过 Resource Manager 申请额外的 Container 再进行其它的事务，那么
+		 * 
+		 * 不需要
+		 * 1) 不需要定义额外的 ApplicationMasterResourceManagerCallbackHandler。
+		 * 2) 不需要通过 resourceManager 通过 ContainerRequest 再去申请额外的资源。
+		 * 
+		 * 只需要
+		 * 1) 执行 Application Master 自己需要执行的代码即可。
+		 * 2) 注册 Application Master 到 Resource Manager，告知我的运行状态
+		 * 
+		 */
 		ApplicationMasterResourceManagerCallbackHandler applicationMasterResourceManagerCallbackHandler = new ApplicationMasterResourceManagerCallbackHandler( conf );
 		
 		// 当 RM 回调 AM 的时候，会触发 ApplicationClientCallbackHandler 方法, 第一个参数是心跳间隔
