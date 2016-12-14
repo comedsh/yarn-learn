@@ -121,10 +121,15 @@ public class ApplicationMasterResourceManagerCallbackHandler implements AMRMClie
 	 */
 	@Override
 	public void onContainersAllocated( List<Container> containers ) {
-
+		
 		LOGGER.info("onContainersAllocated() get called, you have get totally " + containers.size() + " containers for computation ");
-
+		
 		for (Container c : containers) {
+
+			/**
+			 * 这里的实现方式是有问题的，官方教程是建议使用线程来提交；
+			 * 见 http://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/WritingYarnApplications.html 关于 onContainersAllocated() 方法的描述
+			 */
 			
 			LOGGER.info( "Container " + c.getId() + " takes the Memory Size: " + c.getResource().getMemorySize() + "; the cpu vitual cores: " + c.getResource().getVirtualCores() );
 			
@@ -149,7 +154,7 @@ public class ApplicationMasterResourceManagerCallbackHandler implements AMRMClie
 
 	}
 
-    //当 yarn kill 的时候会调用这个刚发
+    // 当 yarn kill 的时候会调用这个刚发
 	@Override
 	public void onShutdownRequest() {
 		

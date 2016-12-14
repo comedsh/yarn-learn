@@ -70,7 +70,7 @@ public class ApplicationClient {
 	 * 
 	 * 做了如下几件事情，
 	 * 
-	 * 1. 创建 Application Master 
+	 * 1. 初始化 Client 并试图创建 Application Master 
 	 * 2. 设置 Application Master 所需资源, CPU 和 内存 
 	 *    通过查询当前集群中单个 node 的最大可用资源，来合理生成 Application Master 所需资源
 	 * 3. 设置 Application Master 执行的 commands
@@ -204,10 +204,12 @@ public class ApplicationClient {
 			classPathEnv.append(File.pathSeparatorChar);
 			classPathEnv.append(c.trim());
 		}
+		
 		if (conf.getBoolean(YarnConfiguration.IS_MINI_YARN_CLUSTER, false)) {
 			classPathEnv.append(File.pathSeparatorChar);
 			classPathEnv.append(System.getProperty("java.class.path"));
 		}
+		
 		return classPathEnv.toString();
 	}
 
@@ -231,7 +233,7 @@ public class ApplicationClient {
 	
 	/**
 	 * 
-	 * 将 jarFile 防止到 HDFS 上，然后将该文件封装成 LocalResource 并返回给 Container 使用
+	 * 将 jarFile 放置到 HDFS 上，然后将该文件封装成 LocalResource 并返回给 Container 使用
 	 * 
 	 * @param fs
 	 * @param appId
